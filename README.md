@@ -125,6 +125,8 @@ However, there is a validation of existence of the account IDs, so sending anoth
 There are 2 Hashmaps, one to store the account objects, and another to store the Transaction per account ID.
 * Concurrency was not handled for the sake of simplicity, so the project is not thread safe,
 so if multiple deposits/withdraws happen concurrently, the final result is unpredictable.
+* Deposit/withdraw are not idempotent, so a retried request after a timeout will be processed twice.
+A production version would need an idempotency key to make retries safe.
 * There is no pagination/limit implemented in "View history" operation, which could
 cause "Out of memory" errors in real/live environments because of potentially huge quantity of 
 transactions for a single account.
